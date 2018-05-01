@@ -1,0 +1,64 @@
+{
+    "name": "vscodevim-disabler",
+    "displayName": "vscodevim-disabler",
+    "description": "Creates a wrapper that disables vscodevim when executing 'editor.action.addSelectionToNextFindMatch' command and enables it when executing 'removeSecondaryCursors'. You can map those to the keys Cmd+d and shift+escape for a seamless execution. Basically removes the multi cursor capabilities for vscodevim.",
+    "version": "0.0.1",
+    "publisher": "tomasruizr",
+    "engines": {
+        "vscode": "^1.22.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:vscodevim-disabler.disableVim",
+        "onCommand:vscodevim-disabler.enableVim"
+    ],
+    "main": "./extension",
+    "contributes": {
+        "commands": [
+            {
+                "command": "vscodevim-disabler.disableVim",
+                "title": "Disable Vim"
+            },
+            {
+                "command": "vscodevim-disabler.enableVim",
+                "title": "Enable Vim"
+            }
+        ],
+        "keybindings":[
+            {
+                "key": "ctrl+alt+d",
+                "command": "vscodevim-disabler.disableVim",
+                "when": "editorTextFocus"
+            },
+            {
+                "key": "ctrl+alt+shift+d",
+                "command": "vscodevim-disabler.enableVim",
+                "when": "editorHasMultipleSelections && textInputFocus"
+            }
+        ],
+        "configuration": {
+            "title": "vscodevim-disabler Configuration",
+            "type": "object",
+            "properties": {
+              "vscodevim-disabler.executionDelay": {
+                "type": "number",
+                "description": "the time it takes to execute the addSelectionToNextFindMatch command after disabling vscodevim",
+                "default": 100
+              }
+            }
+        }
+    },
+    "scripts": {
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "typescript": "^2.6.1",
+        "vscode": "^1.1.6",
+        "eslint": "^4.11.0",
+        "@types/node": "^7.0.43",
+        "@types/mocha": "^2.2.42"
+    }
+}
