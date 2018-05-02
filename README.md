@@ -1,22 +1,65 @@
 # vscodevim-disabler README
 
-Creates a wrapper that disables vscodevim when executing 'editor.action.addSelectionToNextFindMatch' command and enables it when executing 'removeSecondaryCursors'. You can map those to the keys Cmd+d and shift+escape for a seamless execution. Basically removes the multi cursor capabilities for vscodevim.
+Creates a switch to enable and disable the vscodevim extension. It will work as a Bypass of the extension functionality and it's main function is to bring back the right functionality of the Insert Mode multicursor with all the goodness of the Vim extension!.
 
 ## Requirements
 
 Works with [vscodevim](https://marketplace.visualstudio.com/items?itemName=vscodevim.vim)
 
-## Extension Settings
-
-This extension contributes the following settings:
-
-* `vscodevim-disabler.executionDelay`: Hackie property that delays the 'addSelectionToNextFindMatch' to wait for vscodevim to deactivate the first time you push Cmd+d. Ugly but works...
+Is better and most usefull when used along with [multi-command](https://marketplace.visualstudio.com/items?itemName=ryuta46.multi-command)
 
 # Added Commands
 
-* `vscodevim-disabler.disableVim`: Creates a wrapper that disables vscodevim and executes 'editor.action.addSelectionToNextFindMatch'. Default map to "ctrl+alt+d".
-* `vscodevim-disabler.enableVim`: Creates a wrapper that enables vscodevim and executes 'removeSecondaryCursors'. Default map to "ctrl+alt+shift+d".
+* `vscodevim-disabler.disableVim`: Disables Vim Extension
+* `vscodevim-disabler.enableVim`: Enables Vim Extension
 
-Remap keybindings as desire.
 
-Have fun!
+Example configuration with multi-map
+
+## In the settings file
+```
+"multiCommand.commands": [
+    {
+        "command": "multiCommand.addSelectionToNextFindMatch",
+        "interval": 100,
+        "sequence": [
+            "vscodevim-disabler.disableVim",
+            "editor.action.addSelectionToNextFindMatch",
+        ]
+    },
+    {
+        "command": "multiCommand.removeSecondaryCursors",
+        "interval": 10,
+        "sequence": [
+            "vscodevim-disabler.enableVim", 
+            "removeSecondaryCursors"
+        ]
+    },
+    {
+        "command": "multiCommand.cancelSelection",
+        "interval": 10,
+        "sequence": [
+            "vscodevim-disabler.enableVim",
+            "cancelSelection"
+        ]
+    }
+]
+````
+## In the Keyboard Mapping
+```
+{
+    "key": "cmd+d",
+    "command": "multiCommand.addSelectionToNextFindMatch",
+    "when": "editorFocus"
+},
+{
+    "key": "shift+escape",
+    "command": "multiCommand.cancelSelection",
+    "when": "editorHasSelection && textInputFocus"
+},
+{
+    "key": "shift+escape",
+    "command": "multiCommand.removeSecondaryCursors",
+    "when": "editorHasMultipleSelections && editorTextFocus"
+}
+```

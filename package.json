@@ -26,30 +26,7 @@
                 "command": "vscodevim-disabler.enableVim",
                 "title": "Enable Vim"
             }
-        ],
-        "keybindings": [
-            {
-                "key": "ctrl+alt+d",
-                "command": "vscodevim-disabler.disableVim",
-                "when": "editorTextFocus"
-            },
-            {
-                "key": "ctrl+alt+shift+d",
-                "command": "vscodevim-disabler.enableVim",
-                "when": "editorHasMultipleSelections && textInputFocus"
-            }
-        ],
-        "configuration": {
-            "title": "vscodevim-disabler Configuration",
-            "type": "object",
-            "properties": {
-                "vscodevim-disabler.executionDelay": {
-                    "type": "number",
-                    "description": "the time it takes to execute the addSelectionToNextFindMatch command after disabling vscodevim",
-                    "default": 100
-                }
-            }
-        }
+        ]
     },
     "scripts": {
         "postinstall": "node ./node_modules/vscode/bin/install",
