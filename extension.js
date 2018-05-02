@@ -22,26 +22,32 @@ function activate(context) {
     }
     let enabled = vscodevim[0].isActive;
     context.subscriptions.push(vscode.commands.registerCommand('vscodevim-disabler.disableVim', async function () {
-        if (enabled && vscodevim[0].isActive){
+        if (!vscode.workspace.getConfiguration('vim').disableExtension){
             vscode.commands.executeCommand('toggleVim');
-            enabled = false;
-            // Display a message box to the user
-            vscode.window.showInformationMessage('Vim Disabled;');
-            setTimeout(() => {
-                vscode.commands.executeCommand('editor.action.addSelectionToNextFindMatch');
-            }, vscode.workspace.getConfiguration('vscodevim-disabler').executionDelay);
-        }else {
-            vscode.commands.executeCommand('editor.action.addSelectionToNextFindMatch');
         }
+        enabled = true;
+        // if (enabled && vscodevim[0].isActive){
+        //     vscode.commands.executeCommand('toggleVim', true);
+        //     enabled = false;
+        //     // Display a message box to the user
+        //     vscode.window.showInformationMessage('Vim Disabled;');
+        //     setTimeout(() => {
+        //         vscode.commands.executeCommand('editor.action.addSelectionToNextFindMatch');
+        //     }, vscode.workspace.getConfiguration('vscodevim-disabler').executionDelay);
+        // }else {
+        //     vscode.commands.executeCommand('editor.action.addSelectionToNextFindMatch');
+        // }
     }));
     context.subscriptions.push(vscode.commands.registerCommand('vscodevim-disabler.enableVim', async function () {
-        if (!enabled && vscodevim[0].isActive){
+        // if (!enabled && vscodevim[0].isActive){
+        if (vscode.workspace.getConfiguration('vim').disableExtension){
             vscode.commands.executeCommand('toggleVim');
-            enabled = true;
-            // Display a message box to the user
-            vscode.window.showInformationMessage('Vim enabled;');
         }
-        vscode.commands.executeCommand('removeSecondaryCursors');
+        enabled = true;
+        // vscode.commands.executeCommand('removeSecondaryCursors');
+        // // Display a message box to the user
+        // vscode.window.showInformationMessage('Vim enabled;');
+        // }
     }));
 }
 exports.activate = activate;
