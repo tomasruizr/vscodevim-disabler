@@ -19,14 +19,14 @@ function activate(context) {
         if (!vscode.workspace.getConfiguration('vim').disableExtension) {
             vscode.commands.executeCommand('toggleVim');
         }
-        vscode.window.showInformationMessage('desactive Vim');
+        // vscode.window.showInformationMessage('desactive Vim');
         vimEnabled = false;
     }));
     context.subscriptions.push(vscode.commands.registerCommand('vscodevim-disabler.enableVim', async function () {
         if (vscode.workspace.getConfiguration('vim').disableExtension) {
             vscode.commands.executeCommand('toggleVim');
         }
-        vscode.window.showInformationMessage('active Vim');
+        // vscode.window.showInformationMessage('active Vim');
         vimEnabled = true;
     }));
     let lastChar ='';
