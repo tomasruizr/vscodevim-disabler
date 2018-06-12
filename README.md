@@ -4,7 +4,18 @@ Creates a switch to enable and disable the vscodevim extension. It will work as 
 
 ## Requirements
 
-Works with [vscodevim](https://marketplace.visualstudio.com/items?itemName=vscodevim.vim)
+Works with a spetial branch of [vscodevim](https://marketplace.visualstudio.com/items?itemName=vscodevim.vim) which deactivates the plugin when it enters to insert mode.
+
+You can **download the version 0.12 of vscodevim patched to manually install and work [HERE!](https://github.com/tomasruizr/Vim/raw/master/vim-0.12.0.vsix)**
+
+After download just install manually in VSCode:
+
+* Uninstall VSCodeVim
+* Shift + [ Cmd | Ctrl ] + P
+* Extensions: Install from VSIX...
+* Search for the VSIX file just downloaded
+* Set "extensions.autoUpdate" to false in the Settings.
+* Have Fun
 
 Is better and most usefull when used along with [multi-command](https://marketplace.visualstudio.com/items?itemName=ryuta46.multi-command)
 
@@ -28,38 +39,40 @@ Example configuration with multi-map
         ]
     },
     {
-        "command": "multiCommand.removeSecondaryCursors",
-        "interval": 10,
-        "sequence": [
-            "vscodevim-disabler.enableVim", 
-            "removeSecondaryCursors"
-        ]
-    },
-    {
-        "command": "multiCommand.cancelSelection",
+        "command": "multiCommand.NormalMode",
         "interval": 10,
         "sequence": [
             "vscodevim-disabler.enableVim",
-            "cancelSelection"
         ]
-    }
+    },
 ]
 ````
 ## In the Keyboard Mapping
 ```
+//*******************************************
+// Multicursor FUN
+//*******************************************
+
 {
     "key": "cmd+d",
     "command": "multiCommand.addSelectionToNextFindMatch",
     "when": "editorFocus"
 },
+// REMOVALS
+
 {
-    "key": "shift+escape",
-    "command": "multiCommand.cancelSelection",
-    "when": "editorHasSelection && textInputFocus"
+    "key": "cmd+d",
+    "command": "-editor.action.addSelectionToNextFindMatch",
+    "when": "editorFocus"
 },
 {
-    "key": "shift+escape",
-    "command": "multiCommand.removeSecondaryCursors",
-    "when": "editorHasMultipleSelections && editorTextFocus"
-}
+    "key": "cmd+d",
+    "command": "-extension.vim_cmd+d",
+    "when": "editorTextFocus && vim.active && vim.use<D-d> && !inDebugRepl"
+},
+{
+    "key":"escape",
+    "command":"multiCommand.NormalMode",
+    "when":"editorTextFocus && !vim.active"
+},
 ```
