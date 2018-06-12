@@ -3,7 +3,7 @@
     "displayName": "vscodevim-disabler",
     "description": "Creates a wrapper that disables vscodevim when executing 'editor.action.addSelectionToNextFindMatch' command and enables it when executing 'removeSecondaryCursors'. You can map those to the keys Cmd+d and shift+escape for a seamless execution. Basically removes the multi cursor capabilities for vscodevim.",
     "repository": "https://github.com/tomasruizr/vscodevim-disabler",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "publisher": "tomasruizr",
     "engines": {
         "vscode": "^1.22.0"
